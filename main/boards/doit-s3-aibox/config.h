@@ -26,4 +26,21 @@ IO15: BUTTON1
 #define RESET_NVS_BUTTON_GPIO     GPIO_NUM_10
 #define RESET_FACTORY_BUTTON_GPIO GPIO_NUM_NC
 
+/* ---------------------------------------------------------------- */
+/* 8-channel relay configuration (added for voice control)          */
+/* 8 relays mapped to GPIO4/5/6/7/8/11/12/13                         */
+/* ---------------------------------------------------------------- */
+#define RELAY1_GPIO   GPIO_NUM_4
+#define RELAY2_GPIO   GPIO_NUM_5
+#define RELAY3_GPIO   GPIO_NUM_6
+#define RELAY4_GPIO   GPIO_NUM_7
+#define RELAY5_GPIO   GPIO_NUM_8
+#define RELAY6_GPIO   GPIO_NUM_11
+#define RELAY7_GPIO   GPIO_NUM_12
+#define RELAY8_GPIO   GPIO_NUM_13
+
+/* Common 5V relay boards are ACTIVE LOW: LOW=on, HIGH=off.
+   If your board is high-level-trigger, set this to 0 (false). */
+#define RELAY_ACTIVE_LOW   1
+
 #endif // _BOARD_CONFIG_H_

@@ -5,6 +5,7 @@
 #include "button.h"
 #include "config.h"
 #include "led/gpio_led.h"
+#include "relay_controller.h"
 #include <esp_log.h>
 #include <driver/i2c_master.h>
 #include <driver/gpio.h>
@@ -49,7 +50,6 @@ private:
                 EnterWifiConfigMode();
             }
         });
-
         boot_button_.OnLongPress([this]() {
             if(click_times>=3) {
                 EnterWifiConfigMode();
@@ -99,6 +99,16 @@ private:
         });
     }
 
+    // Register the 8 relay channels as MCP tools for voice control.
+    void InitializeRelays() {
+        static const gpio_num_t relay_gpios[8] = {
+            RELAY1_GPIO, RELAY2_GPIO, RELAY3_GPIO, RELAY4_GPIO,
+            RELAY5_GPIO, RELAY6_GPIO, RELAY7_GPIO, RELAY8_GPIO
+        };
+        static RelayController relay(relay_gpios, RELAY_ACTIVE_LOW);
+        ESP_LOGI(TAG, "8-channel relay controller initialized");
+    }
+
     void InitializeGpio(gpio_num_t gpio_num_) {
         gpio_config_t config = {
             .pin_bit_mask = (1ULL << gpio_num_),
@@ -120,6 +130,7 @@ public:
         // 上拉io48 置高电平
         InitializeGpio(GPIO_NUM_48);
         InitializeButtons();
+        InitializeRelays();
     }
 
     virtual Led* GetLed() override {
