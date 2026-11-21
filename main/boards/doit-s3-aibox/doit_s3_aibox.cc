@@ -10,7 +10,9 @@
 #include <driver/i2c_master.h>
 #include <driver/gpio.h>
 
+#undef TAG
 #define TAG "DoitS3AiBox"
+
 
 class DoitS3AiBox : public WifiBoard {
 private:
